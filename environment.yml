@@ -1,0 +1,25 @@
+name: qtguiapp
+channels:
+- m-labs
+- defaults
+dependencies:
+- ca-certificates=2018.12.5=0
+- certifi=2018.11.29=py37_0
+- icu=58.2=ha66f8fd_1
+- jpeg=9b=hb83a4c4_2
+- libpng=1.6.36=h2a8f88b_0
+- openssl=1.1.1a=he774522_0
+- pip=18.1=py37_0
+- pyqt=5.9.2=py37h6538335_2
+- python=3.7.2=h8c8aaf0_0
+- qt=5.9.7=vc14h73c81de_0
+- setuptools=40.6.3=py37_0
+- sip=4.19.8=py37h6538335_0
+- sqlite=3.26.0=he774522_0
+- vc=14.1=h0510ff6_4
+- vs2015_runtime=14.15.26706=h3a45250_0
+- wheel=0.32.3=py37_0
+- wincertstore=0.2=py37_0
+- zlib=1.2.11=h62dcd97_3
+prefix: 
+
