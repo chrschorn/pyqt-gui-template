@@ -2,9 +2,7 @@ import argparse
 import sys
 import traceback
 
-from PyQt5.QtWidgets import QApplication
-
-from .gui import MainWindow
+from .app import Application
 
 
 def new_excepthook(type, value, tb):
@@ -17,13 +15,20 @@ sys.excepthook = new_excepthook
 
 def main():
     parser = argparse.ArgumentParser()
-    # parser.add_argument(...)
-    known_args = parser.parse_known_args()[0]
+    parser.add_argument('--no-gui', action='store_true')
+    args = parser.parse_args()
 
-    qapp = QApplication(sys.argv)
-    gui = MainWindow(**vars(known_args))
-    gui.show()
-    sys.exit(qapp.exec_())
+    app = Application()
+
+    if args.no_gui:
+        app.calculation(3)
+    else:
+        from PyQt5.QtWidgets import QApplication
+        from .gui import MainWindow
+        qapp = QApplication(sys.argv)
+        gui = MainWindow(app)
+        gui.show()
+        sys.exit(qapp.exec_())
 
 
 if __name__ == '__main__':

@@ -6,17 +6,17 @@ from PyQt5.QtCore import QEventLoop, pyqtSlot
 from PyQt5.QtWidgets import QProgressDialog, QProgressBar
 
 
-def long_operation(window_title=" ", label_text="Processing...", is_qt_method=True, disable=True, is_slot=True):
+def long_operation(window_title=" ", label_text="Processing...", disable=True, is_qt_method=True, is_slot=True):
     """
     Shows an infinite progress bar and does the actual work inside a QThread. This keeps the GUI responsive while
     showing that some operation is currently running.
 
     :param window_title: Window title for the progress bar
     :param label_text: Text for the progress bar
-    :param is_qt_method: If set to true, the decorated function must be a QWidget class method. It is then used
-                         as the parent of the progress bar window.
     :param disable:  This temporarily disables the parent QWidget while the operation is going on. Only has effect
                      if is_qt_method = True
+    :param is_qt_method: If set to true, the decorated function must be a QWidget class method. It is then used
+                         as the parent of the progress bar window.
     :param is_slot: This decorator additionally makes the decorated function a pyqtSlot. If this is not wanted or
                     needed, set to False.
     :return: function decorator
@@ -43,6 +43,9 @@ def long_operation(window_title=" ", label_text="Processing...", is_qt_method=Tr
             task = Thread()
             task.finished.connect(progress.close)
             task.finished.connect(loop.exit)
+
+            nonlocal disable
+            disable = disable and qobj is not None
 
             with disabled(qobj, enable=disable, except_objs=[progress]):
                 progress.show()
