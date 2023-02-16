@@ -23,12 +23,12 @@ def main():
     if args.no_gui:
         app.calculation(3)
     else:
-        from PyQt5.QtWidgets import QApplication
+        from PyQt6.QtWidgets import QApplication
         from .gui import MainWindow
         qapp = QApplication(sys.argv)
         gui = MainWindow(app)
         gui.show()
-        sys.exit(qapp.exec_())
+        sys.exit(qapp.exec())
 
 
 if __name__ == '__main__':

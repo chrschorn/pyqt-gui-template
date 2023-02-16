@@ -1,9 +1,8 @@
 from contextlib import contextmanager, ExitStack
 from functools import wraps
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import QEventLoop, pyqtSlot
-from PyQt5.QtWidgets import QProgressDialog, QProgressBar
+from PyQt6.QtCore import QEventLoop, Qt, QThread, pyqtSlot
+from PyQt6.QtWidgets import QProgressDialog, QProgressBar
 
 
 def long_operation(window_title=" ", label_text="Processing...", disable=True, is_qt_method=True, is_slot=True):
@@ -32,7 +31,7 @@ def long_operation(window_title=" ", label_text="Processing...", disable=True, i
             loop = QEventLoop()
             progress = ProgressWindow(parent=qobj, window_title=window_title, label_text=label_text)
 
-            class Thread(QtCore.QThread):
+            class Thread(QThread):
                 def run(self):
                     nonlocal result, exception
                     try:
@@ -96,7 +95,7 @@ class ProgressWindow(QProgressDialog):
         pbar.setTextVisible(not (min_value == max_value == 0))
         self.setBar(pbar)
         # Also interesting option: QtCore.Qt.FramelessWindowHint
-        self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowTitleHint | QtCore.Qt.CustomizeWindowHint)
+        self.setWindowFlags(Qt.WindowType.Window | Qt.WindowType.WindowTitleHint | Qt.WindowType.CustomizeWindowHint)
         self.setWindowTitle(window_title)
         self.setModal(True)
         self.setFixedSize(self.sizeHint())
